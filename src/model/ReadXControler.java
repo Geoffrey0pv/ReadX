@@ -35,7 +35,7 @@ public class ReadXControler {
     }
     public String addManager(String name, int id){
         Manager managerSearch = searchManager(name, id);
-        String message = "";
+        String message;
         if(managerSearch != null ){
             message = "TRY AGAIN. User had already been registered. ";
         } else {
@@ -628,26 +628,58 @@ public class ReadXControler {
      * @param user   The user.
      * @return A message indicating the success of the purchase and the user to whom the book was added.
      */
+//    public String buyBook(int j, User user, String creditCard) {
+//        String message = "";
+//        BibliographyProduct bookBuy = null;
+//        boolean alreadyAdded = false;
+//
+//        for (BibliographyProduct product : produtcs) {
+//            if (!alreadyAdded && product instanceof Book) {
+//                if (user instanceof UserFree) {
+//                    if (produtcs.indexOf(product) == j) {
+//                        bookBuy = product;
+//                        ((UserFree) user).setCreditCard(creditCard);
+//                        ((Book) product).setNumSales(((Book) product).getNumSales() + 1);
+//                        message = user.addBook(bookBuy) + " was added successfully to userfree library: " + user.getName() + "\n" +
+//                                "\nBill payment." + "\nThe value of the book " + bookBuy.getValue() + " has been charged to the credit card: " + ((UserFree) user).getCreditCard() + "\n* Sales: " + ((Book) product).getNumSales();
+//                        alreadyAdded = true;
+//                    }
+//                } else if (user instanceof UserPremium) {
+//                    if (produtcs.indexOf(product) == j) {
+//                        bookBuy = product;
+//                        ((Book) product).setNumSales(((Book) product).getNumSales() + 1);
+//                        message = user.addBook(bookBuy) + " was added successfully to userpremium library: " + user.getName() + "\n" +
+//                                "\nBill payment." + "\nThe value of the book " + bookBuy.getValue() + " has been charged to the credit card: " + ((UserPremium) user).getCreditCard() + "\n* Sales: " + ((Book) product).getNumSales();
+//                        alreadyAdded = true;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return message;
+//    }
     public String buyBook(int j, User user, String creditCard){
         String message = "";
         BibliographyProduct bookBuy;
+        boolean alreadyAdded = false;
 
         for(BibliographyProduct product: produtcs){
-            if(product instanceof Book && user instanceof UserFree){
+            if(!alreadyAdded && product instanceof Book && user instanceof UserFree){
                 bookBuy = produtcs.get(j);
                 ((UserFree) user).setCreditCard(creditCard);
                 ((Book) product).setNumSales(((Book) product).getNumSales() + 1);
                 message = user.addBook(bookBuy) + " was added succesfuly to userfree library: " + user.getName() + "\n"
                         + "\n Bill payment." + "\n The value book "+ bookBuy.getValue() + " Has charged to credit card: " + ((UserFree) user).getCreditCard() + "\n* Sales: " + ((Book) product).getNumSales();
-
-            } else if (product instanceof Book && user instanceof UserPremium){
+                alreadyAdded = true;
+            } else if (!alreadyAdded && product instanceof Book && user instanceof UserPremium){
                 bookBuy = produtcs.get(j);
                 ((Book) product).setNumSales(((Book) product).getNumSales() + 1);
                 message = user.addBook(bookBuy) + " was added succesfuly to userpremium library: " + user.getName() + "\n" +
-                         "\n Bill payment." + "\n * The value book "+ bookBuy.getValue() + " Has charged to credit card: " + ((UserPremium) user).getCreditCard() + "\n* Sales: " + ((Book) product).getNumSales();
+                        "\n Bill payment." + "\n * The value book "+ bookBuy.getValue() + " Has charged to credit card: " + ((UserPremium) user).getCreditCard() + "\n* Sales: " + ((Book) product).getNumSales();
+                alreadyAdded = true;
             }
         }
-            return message;
+        return message;
     }
     /**
      * Subscribes a magazine for the specified user and adds it to their collection.
@@ -659,21 +691,25 @@ public class ReadXControler {
     public String subscribeMagazine(int j, User user, String creditCard){
         String message = "";
         BibliographyProduct magazineSub;
+        boolean alreadyAdded = false;
 
         for(BibliographyProduct product: produtcs){
-            if(product instanceof Magazine && user instanceof UserFree){
+            if(!alreadyAdded && product instanceof Magazine && user instanceof UserFree){
                 magazineSub = produtcs.get(j);
                 ((UserFree) user).setCreditCard(creditCard);
                 ((Magazine) magazineSub).setActiveSubscriptions(((Magazine) magazineSub).getActiveSubscriptions()+1);
                 message = user.addMagazine(magazineSub) + " was added succesfuly to userfree: " + user.getName() + "\n"
                         + "\n The value book "+ magazineSub.getValue() + " Has charged to credit card: " + ((UserFree) user).getCreditCard() +
                         "\n * Active subscriptions: " + ((Magazine) magazineSub).getActiveSubscriptions();
-            } else if (product instanceof Magazine && user instanceof UserPremium){
+                alreadyAdded = true;
+
+            } else if (!alreadyAdded && product instanceof Magazine && user instanceof UserPremium){
                 magazineSub = produtcs.get(j);
                 ((Magazine) magazineSub).setActiveSubscriptions(((Magazine) magazineSub).getActiveSubscriptions()+1);
                 message = user.addMagazine(magazineSub) + " was added succesfuly to userpremium: " + user.getName() + "\n" +
                         "\n Bill payment." +  "\n The subscription value "+ magazineSub.getValue() + " Has charged to credit card: " + ((UserPremium) user).getCreditCard() +
                         "\n * Active subscriptions: " + ((Magazine) magazineSub).getActiveSubscriptions();
+                alreadyAdded = true;
             }
         }
         return message;
@@ -732,9 +768,8 @@ public class ReadXControler {
         BibliographyProduct product = user.searchProduct(x,y);
         int subcriptions = ((Magazine) product).getActiveSubscriptions();
         if(product != null){
-
             ((Magazine) product).setActiveSubscriptions(subcriptions - 1);
-            message = user.deleteProduct(x,y) + "New Subscriptions magazines: " + ((Magazine) product).getActiveSubscriptions();
+            message = user.deleteProduct(x,y) + "\nNew Subscriptions magazines: " + ((Magazine) product).getActiveSubscriptions();
         }else {
             message = "Try again. The magazine not exits in your library";
         }

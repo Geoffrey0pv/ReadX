@@ -25,7 +25,7 @@ public class ReadX {
     public void menu() {
         boolean onLoop = true;
         while (onLoop) {
-            String[] opciones = {"Register Client", "Register Manager", "Login user","Exit"};
+            String[] opciones = {"Register Client", "Register Manager", "Login user", "","Exit"};
             String option = (String) JOptionPane.showInputDialog(null, "Choose an option", "Menu", JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
             switch (option) {

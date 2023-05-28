@@ -23,33 +23,36 @@ public abstract class User {
     public String getName() {
         return name;
     }
-    public String addBook(BibliographyProduct book){
+    public String addBook(BibliographyProduct book) {
         String message = "";
         boolean control = false;
+
         for (int i = 0; i < library.length && !control; i++) {
-            for (int j = 0; j < library.length && !control; j++) {
-                if(library[i][j] == null){
+            for (int j = 0; j < library[i].length && !control; j++) {
+                if (library[i][j] == null) {
                     library[i][j] = book;
                     control = true;
                     message = "The book: " + book.getName() + " was added";
                 }
             }
-
         }
         return message;
     }
-    public String addMagazine(BibliographyProduct magazine){
+    public String addMagazine(BibliographyProduct magazine) {
         String message = "";
         boolean control = false;
-        for (int i = 0; i < library.length && !control; i++) {  //reccorre las filas
-            for (int j = 0; j < library.length && !control; j++) { //recorre las columnas
-                if(library [i][j] == null){
+
+        for (int i = 0; i < library.length && !control; i++) {
+            for (int j = 0; j < library[i].length && !control; j++) {
+                if (library[i][j] == null) {
                     library[i][j] = magazine;
                     control = true;
                     message = "The Magazine: " + magazine.getName() + " was added";
                 }
             }
+            control = true;
         }
+
         return message;
     }
     public BibliographyProduct positionLibrary(int position) {
