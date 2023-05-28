@@ -25,7 +25,7 @@ public class ReadX {
     public void menu() {
         boolean onLoop = true;
         while (onLoop) {
-            String[] opciones = {"Register Client", "Register Manager", "Login user", "","Exit"};
+            String[] opciones = {"Register Client", "Register Manager", "Login user","Exit"};
             String option = (String) JOptionPane.showInputDialog(null, "Choose an option", "Menu", JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
             switch (option) {
@@ -368,8 +368,12 @@ public class ReadX {
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null,
                     button, button[0]);
+            JOptionPane.showMessageDialog(null, controler.generateAdds(userLogged.getId()));
             if (window == 0) {
                 JOptionPane.showMessageDialog(null, controler.readingSimulator(xCoord, ycoord, userLogged, -1));
+                if(i == 20){
+                    JOptionPane.showMessageDialog(null, controler.generateAdds(userLogged.getId()));
+                }
             } else if (window == 1) {
                 JOptionPane.showMessageDialog(null, controler.readingSimulator(xCoord, ycoord, userLogged, 1));
             } else if (window == 2){

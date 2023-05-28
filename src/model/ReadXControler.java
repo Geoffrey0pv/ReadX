@@ -33,6 +33,13 @@ public class ReadXControler {
         users.add(userFree);
         users.add(userPremium);
     }
+    /**
+     * Adds a new manager with the given name and ID.
+     *
+     * @param name  The name of the manager.
+     * @param id    The ID of the manager.
+     * @return A message indicating whether the manager has been successfully added or not.
+     */
     public String addManager(String name, int id){
         Manager managerSearch = searchManager(name, id);
         String message;
@@ -45,6 +52,13 @@ public class ReadXControler {
         }
         return message;
     }
+    /**
+     * Searches for a manager with the given name and ID.
+     *
+     * @param name  The name of the manager to search for.
+     * @param id    The ID of the manager to search for.
+     * @return The found manager object, or null if no manager is found.
+     */
     public Manager searchManager(String name, int id){
         Manager managerSearch = null;
         for(Manager manager : managers){
@@ -622,42 +636,13 @@ public class ReadXControler {
         return message;
     }
     /**
-     * Buys a book for the specified user and adds it to their collection.
+     * Purchases a book for a user and processes the payment.
      *
-     * @param j    The index of the book to be bought.
-     * @param user   The user.
-     * @return A message indicating the success of the purchase and the user to whom the book was added.
+     * @param j           The index of the book in the product list.
+     * @param user        The user purchasing the book.
+     * @param creditCard  The credit card for the payment.
+     * @return A message indicating the success of the purchase and payment.
      */
-//    public String buyBook(int j, User user, String creditCard) {
-//        String message = "";
-//        BibliographyProduct bookBuy = null;
-//        boolean alreadyAdded = false;
-//
-//        for (BibliographyProduct product : produtcs) {
-//            if (!alreadyAdded && product instanceof Book) {
-//                if (user instanceof UserFree) {
-//                    if (produtcs.indexOf(product) == j) {
-//                        bookBuy = product;
-//                        ((UserFree) user).setCreditCard(creditCard);
-//                        ((Book) product).setNumSales(((Book) product).getNumSales() + 1);
-//                        message = user.addBook(bookBuy) + " was added successfully to userfree library: " + user.getName() + "\n" +
-//                                "\nBill payment." + "\nThe value of the book " + bookBuy.getValue() + " has been charged to the credit card: " + ((UserFree) user).getCreditCard() + "\n* Sales: " + ((Book) product).getNumSales();
-//                        alreadyAdded = true;
-//                    }
-//                } else if (user instanceof UserPremium) {
-//                    if (produtcs.indexOf(product) == j) {
-//                        bookBuy = product;
-//                        ((Book) product).setNumSales(((Book) product).getNumSales() + 1);
-//                        message = user.addBook(bookBuy) + " was added successfully to userpremium library: " + user.getName() + "\n" +
-//                                "\nBill payment." + "\nThe value of the book " + bookBuy.getValue() + " has been charged to the credit card: " + ((UserPremium) user).getCreditCard() + "\n* Sales: " + ((Book) product).getNumSales();
-//                        alreadyAdded = true;
-//                    }
-//                }
-//            }
-//        }
-//
-//        return message;
-//    }
     public String buyBook(int j, User user, String creditCard){
         String message = "";
         BibliographyProduct bookBuy;
@@ -682,11 +667,12 @@ public class ReadXControler {
         return message;
     }
     /**
-     * Subscribes a magazine for the specified user and adds it to their collection.
+     * Subscribes a user to a magazine and processes the subscription payment.
      *
-     * @param j    The index of the magazine to be subscribed.
-     * @param user The name of the user.
-     * @return A message indicating the success of the subscription and the user to whom the magazine was added.
+     * @param j           The index of the magazine in the product list.
+     * @param user        The user subscribing to the magazine.
+     * @param creditCard  The credit card for the payment.
+     * @return A message indicating the success of the subscription and payment.
      */
     public String subscribeMagazine(int j, User user, String creditCard){
         String message = "";
@@ -714,6 +700,12 @@ public class ReadXControler {
         }
         return message;
     }
+    /**
+     * Generates a string representation of the library for a specific user.
+     *
+     * @param userLogin The user whose library will be displayed.
+     * @return A string representation of the user's library.
+     */
     public String showLibrary(User userLogin){
         BibliographyProduct[][] library = userLogin.getLibrary();
         StringBuilder message = new StringBuilder();
@@ -740,6 +732,15 @@ public class ReadXControler {
         }
         return message.toString();
     }
+    /**
+     * Simulates a reading session for a specific product in a user's library.
+     *
+     * @param x         The x-coordinate of the product in the library.
+     * @param y         The y-coordinate of the product in the library.
+     * @param userLogin The user who is logged in.
+     * @param pageRead  The number of pages to be read in the current session.
+     * @return A string representing the reading session information.
+     */
     public String readingSimulator(int x, int y, User userLogin, int pageRead){
         String message = "";
         BibliographyProduct product = userLogin.searchProduct(x,y);
@@ -749,7 +750,6 @@ public class ReadXControler {
         } else {
             product.setReadPages(product.getReadPages() + pageRead);
         }
-
         if(product != null){
             message = "* Reading session in progress: " +
                     "\n\n* Reading: " + product.getName() +
@@ -759,10 +759,23 @@ public class ReadXControler {
         }
         return message;
     }
+    /**
+     * Retrieves the list of magazines in a user's library.
+     *
+     * @param user The user whose library is being accessed.
+     * @return A string representation of the magazines in the user's library.
+     */
     public String showMagazinesUser(User user){
-        String message = user.searchMagazine();
-        return message;
+        return user.searchMagazine();
     }
+    /**
+     * Cancels a subscription for a user at the specified position in their library.
+     *
+     * @param user The user whose subscription is being canceled.
+     * @param x    The row position of the magazine in the user's library.
+     * @param y    The column position of the magazine in the user's library.
+     * @return A message indicating the result of the cancellation.
+     */
     public String cancelSubscription(User user, int x, int y){
         String message = "";
         BibliographyProduct product = user.searchProduct(x,y);

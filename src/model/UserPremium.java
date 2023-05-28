@@ -28,7 +28,11 @@ public class UserPremium extends User{
     public String toString() {
         return super.toString();
     }
-
+    /**
+     * Generates a monthly payment for the user.
+     *
+     * @return A message containing the user's avatar, credit card information, last month's payment, and the value of the current month's payment.
+     */
     public String generateMouthPay() {
         SimpleDateFormat formatoMes = new SimpleDateFormat("MM");
         String mesActualStr = formatoMes.format(date);
@@ -48,6 +52,14 @@ public class UserPremium extends User{
                 "* Last Moth Pay: " + lastMothPay + "\n" +
                 "* Value pay moth loaded: " + PAYMONTH + "$" + "\n";
     }
+    /**
+     * Generates a surprise for the user based on the month, first letter, and critics count.
+     *
+     * @param firstletter         The month value.
+     * @param moth   The first letter.
+     * @param criticsCount  The count of critics.
+     * @return A message indicating whether the user has won a Spotify account or not.
+     */
     @Override
     public String surprise(int moth, char firstletter, int criticsCount) {
         Random random = new Random();

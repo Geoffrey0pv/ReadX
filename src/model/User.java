@@ -23,6 +23,12 @@ public abstract class User {
     public String getName() {
         return name;
     }
+    /**
+     * Adds a book to the user's library.
+     *
+     * @param book The book to be added.
+     * @return A message indicating the success of the addition.
+     */
     public String addBook(BibliographyProduct book) {
         String message = "";
         boolean control = false;
@@ -38,6 +44,12 @@ public abstract class User {
         }
         return message;
     }
+    /**
+     * Adds a magazine to the user's library.
+     *
+     * @param magazine The magazine to be added.
+     * @return A message indicating the success of the addition.
+     */
     public String addMagazine(BibliographyProduct magazine) {
         String message = "";
         boolean control = false;
@@ -52,17 +64,23 @@ public abstract class User {
             }
             control = true;
         }
-
         return message;
     }
-    public BibliographyProduct positionLibrary(int position) {
-        int row = ((position -1) / 5);
-        int column = ((position -1) % 5);
-        return library[row][column];
-    }
+    /**
+     * Searches for a bibliography product in the library based on the given coordinates.
+     *
+     * @param x The x-coordinate of the product in the library.
+     * @param y The y-coordinate of the product in the library.
+     * @return The bibliography product found at the specified coordinates.
+     */
     public BibliographyProduct searchProduct(int x, int y){
         return library[x][y];
     }
+    /**
+     * Searches for magazines in the library and returns information about them.
+     *
+     * @return A message containing information about the magazines found in the library.
+     */
     public String searchMagazine(){
         String message = "";
         for (int i = 0; i < library.length; i++) {
@@ -77,10 +95,16 @@ public abstract class User {
     public BibliographyProduct[][] getLibrary() {
         return library;
     }
+    /**
+     * Deletes a product from the library at the specified coordinates.
+     *
+     * @param x The x-coordinate of the product in the library.
+     * @param y The y-coordinate of the product in the library.
+     * @return A message indicating the successful deletion of the product.
+     */
     public String deleteProduct(int x, int y){
-        String message = "Delete succesfuly";
         library[x][y] = null;
-        return message;
+        return "Delete succesfuly";
     }
     public void setLibrary(BibliographyProduct[][] library) {
         this.library = library;
