@@ -71,6 +71,6 @@ public class BibliographyProduct {
                // "* Date publish: " + date + " \n " +
                 "* Pages numbers: " + numPages + " \n " +
                 "* Value: " + value + "$ \n " +
-                "* Number read pages: " + readPages;
+                "* Number read pages: " + readPages + "\n";
     }
 }

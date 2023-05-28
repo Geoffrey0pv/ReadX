@@ -704,10 +704,6 @@ public class ReadXControler {
         }
         return message.toString();
     }
-    public BibliographyProduct searchProductUser(){
-
-        return null;
-    }
     public String readingSimulator(int x, int y, User userLogin, int pageRead){
         String message = "";
         BibliographyProduct product = userLogin.searchProduct(x,y);
@@ -734,9 +730,11 @@ public class ReadXControler {
     public String cancelSubscription(User user, int x, int y){
         String message = "";
         BibliographyProduct product = user.searchProduct(x,y);
-
+        int subcriptions = ((Magazine) product).getActiveSubscriptions();
         if(product != null){
 
+            ((Magazine) product).setActiveSubscriptions(subcriptions - 1);
+            message = user.deleteProduct(x,y) + "New Subscriptions magazines: " + ((Magazine) product).getActiveSubscriptions();
         }else {
             message = "Try again. The magazine not exits in your library";
         }

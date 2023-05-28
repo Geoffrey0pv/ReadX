@@ -378,9 +378,6 @@ public class ReadX {
             }
         }
     }
-    public void readingSession(){
-
-    }
     public void cancelSubscription(User userLoggead){
         JOptionPane.showMessageDialog(null, "Choose the coordinates of magazine that do you want cancel: " +  controler.showMagazinesUser(userLoggead));
 

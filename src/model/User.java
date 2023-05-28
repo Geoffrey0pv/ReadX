@@ -65,7 +65,7 @@ public abstract class User {
         for (int i = 0; i < library.length; i++) {
             for (int j = 0; j < library.length; j++) {
                 if(library[i][j] instanceof Magazine){
-                    message += "Magazine: " + library[i][j].getName() + " id: " + library[i][j].getId() + "x: " + i + "y: " + j;
+                    message += "\nMagazine: " + library[i][j].getName() + " id: " + library[i][j].getId() + " x: " + i + " y: " + j + "\n";
                 }
             }
         }
@@ -74,7 +74,11 @@ public abstract class User {
     public BibliographyProduct[][] getLibrary() {
         return library;
     }
-
+    public String deleteProduct(int x, int y){
+        String message = "Delete succesfuly";
+        library[x][y] = null;
+        return message;
+    }
     public void setLibrary(BibliographyProduct[][] library) {
         this.library = library;
     }
