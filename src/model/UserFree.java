@@ -3,55 +3,26 @@ import java.util.Date;
 public class UserFree extends User{
     private boolean adds = true;
     private boolean winSurprise = false;
-    private BibliographyProduct [] books;
-    private BibliographyProduct [] magazines;
+    private BibliographyProduct[][] library;
+    private final int ROWS = 5;
+    private final int COLUMNS = 5;
     private String creditCard;
     private int countAvailableBooks;
     private int countAvailableReview;
 
     public UserFree(String name, TypeID typeId, int id, Date date, String email) {
         super(name, typeId, id, date, email);
-        books = new Book[5];
-        magazines = new Magazine[2];
-    }
-    /**
-     * Adds a book to the user's collection.
-     *
-     * @param book The book to be added.
-     * @return A message indicating the success of adding the book.
-     */
-    @Override
-    public String addBook(BibliographyProduct book){
-        String message = "";
-        boolean control = true;
-        for (int i = 0; i < books.length && control; i++) {
-            if(books[i] == null){
-                books[i] = book;
-                message = "The book: " + book.getName();
-                control = false;
-            }
-        }
-        return message;
-    }
-    /**
-     * Adds a magazine to the user's collection.
-     *
-     * @param magazine The magazine to be added.
-     * @return A message indicating the success of adding the magazine.
-     */
-    @Override
-    public String addMagazine(BibliographyProduct magazine){
-        String message = "";
-        boolean control = false;
+        library = new BibliographyProduct[ROWS][COLUMNS];
 
-        for (int i = 0; i < magazines.length && !control; i++) {
-            if(magazines[i] == null){
-                magazines[i] = magazine;
-                message = "The magazine: " + magazine.getName();
-                control = true;
-            }
-        }
-        return message;
+    }
+
+    @Override
+    public String addMagazine(BibliographyProduct magazine) {
+        return super.addMagazine(magazine);
+    }
+    @Override
+    public String addBook(BibliographyProduct book) {
+        return super.addBook(book);
     }
     @Override
     public int getId() {
@@ -80,6 +51,10 @@ public class UserFree extends User{
 
         return message;
     }
+    public String showLibrary(){
+        return null;
+    }
+
     /**
      * Returns a string representation of the UserFree object.
      *

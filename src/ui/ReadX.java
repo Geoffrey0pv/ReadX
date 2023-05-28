@@ -241,7 +241,8 @@ public class ReadX {
             int password = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter your ID.:"));
 
             User userLogged = controler.searchUser(password,nickname);
-            if (userLogged != null) {
+            if (userLogged != null && userLogged instanceof UserFree) {
+                JOptionPane.showMessageDialog(null, controler.generateAdds(userLogged.getId()));
                 JOptionPane.showMessageDialog(null,"WELCOME " + userLogged.getName());
                 loginMenu(userLogged);
             } else {
@@ -299,7 +300,7 @@ public class ReadX {
     public void loginMenu(User userLogged) {
         boolean onLoop = true;
         while (onLoop) {
-            String[] opciones = {"Buy bibliografic product", "Consult own library","Exit"};
+            String[] opciones = {"Buy bibliografic product", "Consult own library", "Cancel subscription magazine","Exit"};
             String option = (String) JOptionPane.showInputDialog(null, "Choose an option", "Menu", JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
             switch (option) {
@@ -307,10 +308,10 @@ public class ReadX {
                     buyProduct(userLogged);
                     break;
                 case "Consult own library":
-                    library();
+                    library(userLogged);
                     break;
                 case "Cancel subscription magazine":
-                    cancelSubscription();
+                    cancelSubscription(userLogged);
                     break;
                 case "Exit":
                     menu();
@@ -328,7 +329,7 @@ public class ReadX {
                 button, button[0]);
         if (window == 0) {
             if(userLogged instanceof UserFree) {
-                controler.generateAdds(userLogged.getId());
+                JOptionPane.showMessageDialog(null, controler.generateAdds(userLogged.getId()));
                 String creditCard = JOptionPane.showInputDialog("enter the credit card to which you want to charge the payment ");
                 int chooseBook = Integer.parseInt(JOptionPane.showInputDialog("Choose what book do you want to buy: \n" + controler.showBooks()));
                 JOptionPane.showMessageDialog(null, controler.buyBook(chooseBook, userLogged, creditCard));
@@ -348,10 +349,45 @@ public class ReadX {
             }
         }
     }
-    public void library(){
+    public void library(User userLogged){
+        if(userLogged instanceof UserFree){
+            JOptionPane.showMessageDialog(null, controler.generateAdds(userLogged.getId()));
+        }
+        JOptionPane.showMessageDialog(null, controler.showLibrary(userLogged) + "\n Choose the product, enter the x,y coordinates for starting a reading session." );
+
+        int xCoord = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter de x coordinates"));
+        int ycoord = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter de y coordinates"));
+        boolean control = false;
+
+        for (int i = 0; i < 1000 && !control; i++) {
+            String message = controler.readingSimulator(xCoord, ycoord, userLogged, 0);
+            String[] button = {"Back page", "Next page", "Back to menu"};
+            int window = JOptionPane.showOptionDialog(null,
+                    message,
+                    "ReadX",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null,
+                    button, button[0]);
+            if (window == 0) {
+                JOptionPane.showMessageDialog(null, controler.readingSimulator(xCoord, ycoord, userLogged, -1));
+            } else if (window == 1) {
+                JOptionPane.showMessageDialog(null, controler.readingSimulator(xCoord, ycoord, userLogged, 1));
+            } else if (window == 2){
+                loginMenu(userLogged);
+                control = true;
+            }
+        }
+    }
+    public void readingSession(){
 
     }
-    public void cancelSubscription(){
+    public void cancelSubscription(User userLoggead){
+        JOptionPane.showMessageDialog(null, "Choose the coordinates of magazine that do you want cancel: " +  controler.showMagazinesUser(userLoggead));
+
+        int xCoord = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter de x coordinates"));
+        int ycoord = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter de y coordinates"));
+
+        JOptionPane.showMessageDialog(null, controler.cancelSubscription(userLoggead,xCoord,ycoord));
 
     }
 

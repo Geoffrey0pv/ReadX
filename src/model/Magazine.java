@@ -8,7 +8,6 @@ public class Magazine extends BibliographyProduct{
 private TypePerodicity issuancePeriodicity;
 private TypeMagazine categoryMagazine;
 private int activeSubscriptions;
-private int readPages = 0;
 Calendar cal;
 Random random;
     public Magazine(String name, Calendar date, int numPages, double value, String id, TypePerodicity issuancePeriodicity, TypeMagazine categoryMagazine, int activeSubscriptions) {
@@ -31,8 +30,7 @@ Random random;
                 "* Periodicity: " + issuancePeriodicity + " \n " +
                 "* Category: " + categoryMagazine + "\n" +
                 "* Date publish: " + cal.getTime() +  "\n" +
-                "* Active Subscriptions: " + activeSubscriptions  + "\n " +
-                "* Number read pages: " + readPages;
+                "* Active Subscriptions: " + activeSubscriptions  + "\n ";
     }
 
     public int getActiveSubscriptions() {

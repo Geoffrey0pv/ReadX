@@ -634,7 +634,6 @@ public class ReadXControler {
 
         for(BibliographyProduct product: produtcs){
             if(product instanceof Book && user instanceof UserFree){
-                generateAdds(user.getId());
                 bookBuy = produtcs.get(j);
                 ((UserFree) user).setCreditCard(creditCard);
                 ((Book) product).setNumSales(((Book) product).getNumSales() + 1);
@@ -676,6 +675,70 @@ public class ReadXControler {
                         "\n Bill payment." +  "\n The subscription value "+ magazineSub.getValue() + " Has charged to credit card: " + ((UserPremium) user).getCreditCard() +
                         "\n * Active subscriptions: " + ((Magazine) magazineSub).getActiveSubscriptions();
             }
+        }
+        return message;
+    }
+    public String showLibrary(User userLogin){
+        BibliographyProduct[][] library = userLogin.getLibrary();
+        StringBuilder message = new StringBuilder();
+        message.append("Library of ").append(userLogin.getName()).append("\n\n");
+        message.append("      ");
+
+        for (int i = 0; i < 5; i++) {
+            message.append("   |   ").append(i).append("   ");
+        }
+        message.append(" |\n");
+
+        for (int i = 0; i < library.length; i++) {
+            message.append("   ").append(i).append("   ");
+            for (int j = 0; j < library.length; j++) {
+                message.append("|  ");
+                if(library[i][j] != null){
+                    message.append(library[i][j].getId());
+                } else {
+                    message.append(" __  ");
+                }
+                message.append("  ");
+            }
+            message.append("|\n");
+        }
+        return message.toString();
+    }
+    public BibliographyProduct searchProductUser(){
+
+        return null;
+    }
+    public String readingSimulator(int x, int y, User userLogin, int pageRead){
+        String message = "";
+        BibliographyProduct product = userLogin.searchProduct(x,y);
+
+        if(product.getReadPages() == 0 && pageRead == -1){
+            product.setReadPages(0);
+        } else {
+            product.setReadPages(product.getReadPages() + pageRead);
+        }
+
+        if(product != null){
+            message = "* Reading session in progress: " +
+                    "\n\n* Reading: " + product.getName() +
+                    "\n\n* Reading page: " + product.getReadPages();
+        } else {
+            message = "there is no book in those coordinates";
+        }
+        return message;
+    }
+    public String showMagazinesUser(User user){
+        String message = user.searchMagazine();
+        return message;
+    }
+    public String cancelSubscription(User user, int x, int y){
+        String message = "";
+        BibliographyProduct product = user.searchProduct(x,y);
+
+        if(product != null){
+
+        }else {
+            message = "Try again. The magazine not exits in your library";
         }
         return message;
     }

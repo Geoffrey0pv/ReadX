@@ -6,13 +6,16 @@ public abstract class User {
     private TypeID idTP;
     private Date date;
     private String email;
+    private BibliographyProduct[][] library;
+    private final int ROWS = 5;
+    private final int COLUMNS = 5;
     public User(String name, TypeID typeId, int id, Date date, String email) {
         this.name = name;
         idTP = typeId;
         this.id = id;
         this.date = date;
         this.email = email;
-
+        library = new BibliographyProduct[ROWS][COLUMNS];
     }
     public String surprise (int moth, char firstletter, int criticsCount){
         return  null;
@@ -20,8 +23,61 @@ public abstract class User {
     public String getName() {
         return name;
     }
-    public String addBook(BibliographyProduct book){return null;}
-    public String addMagazine(BibliographyProduct magazine){return null;}
+    public String addBook(BibliographyProduct book){
+        String message = "";
+        boolean control = false;
+        for (int i = 0; i < library.length && !control; i++) {
+            for (int j = 0; j < library.length && !control; j++) {
+                if(library[i][j] == null){
+                    library[i][j] = book;
+                    control = true;
+                    message = "The book: " + book.getName() + " was added";
+                }
+            }
+
+        }
+        return message;
+    }
+    public String addMagazine(BibliographyProduct magazine){
+        String message = "";
+        boolean control = false;
+        for (int i = 0; i < library.length && !control; i++) {  //reccorre las filas
+            for (int j = 0; j < library.length && !control; j++) { //recorre las columnas
+                if(library [i][j] == null){
+                    library[i][j] = magazine;
+                    control = true;
+                    message = "The Magazine: " + magazine.getName() + " was added";
+                }
+            }
+        }
+        return message;
+    }
+    public BibliographyProduct positionLibrary(int position) {
+        int row = ((position -1) / 5);
+        int column = ((position -1) % 5);
+        return library[row][column];
+    }
+    public BibliographyProduct searchProduct(int x, int y){
+        return library[x][y];
+    }
+    public String searchMagazine(){
+        String message = "";
+        for (int i = 0; i < library.length; i++) {
+            for (int j = 0; j < library.length; j++) {
+                if(library[i][j] instanceof Magazine){
+                    message += "Magazine: " + library[i][j].getName() + " id: " + library[i][j].getId() + "x: " + i + "y: " + j;
+                }
+            }
+        }
+        return message;
+    }
+    public BibliographyProduct[][] getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(BibliographyProduct[][] library) {
+        this.library = library;
+    }
     public void setName(String name) {
         this.name = name;
     }

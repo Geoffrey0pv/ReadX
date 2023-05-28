@@ -7,6 +7,7 @@ public class BibliographyProduct {
     private int numPages;
     private double value;
     private String id;
+    private int readPages = 0;
 
     public BibliographyProduct(String name, Calendar date, int numPages, double value, String id) {
         this.name = name;
@@ -56,12 +57,20 @@ public class BibliographyProduct {
     public void setValue(int value) {
         this.value = value;
     }
+
+    public int getReadPages() {
+        return readPages;
+    }
+    public void setReadPages(int readPages) {
+        this.readPages = readPages;
+    }
     @Override
     public String toString() {
         return  " \n " +
                 "\n* Name: " + name + " \n " +
                // "* Date publish: " + date + " \n " +
                 "* Pages numbers: " + numPages + " \n " +
-                "* Value: " + value + "$ \n ";
+                "* Value: " + value + "$ \n " +
+                "* Number read pages: " + readPages;
     }
 }
